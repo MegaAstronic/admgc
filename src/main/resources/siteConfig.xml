@@ -1,0 +1,18 @@
+<site logo="admgc" >
+	<topnav>
+		<link href="" name="控制台" />
+		<dir name="其他系统">
+			<link href="#" name="邮件系统" />
+			<link href="#" name="授权管理" />
+		</dir>
+		<link href="#" name="关于" />
+	</topnav>
+	<sidebar>
+		<link href="/" name="主页" />
+		<dir name="页面生成">
+			<link href="/tableSelect" name="起步" />
+			<link href="#" name="页面管理" />
+		</dir>
+		<link href="#" name="关于" />
+	</sidebar>
+</site>
