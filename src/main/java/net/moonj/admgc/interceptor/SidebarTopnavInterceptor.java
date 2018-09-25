@@ -26,7 +26,7 @@ public class SidebarTopnavInterceptor implements HandlerInterceptor {
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
 		if(modelAndView==null || modelAndView.getModel() == null){
-			logger.info("拦截到controller以外的请求 :"+request.getPathInfo());
+			logger.debug("拦截到controller以外的请求 :"+request.getServletPath());
 		}else{
 			siteStructure.modelPut(modelAndView.getModel());
 		}

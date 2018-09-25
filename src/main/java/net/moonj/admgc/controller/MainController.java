@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,13 +28,22 @@ public class MainController {
 	@Resource
 	private SiteStructure siteStructure;
 	
-
+	@Resource
+	private SchemaQueryService schemaQueryService;
 	
+	@RequestMapping("/gene/table")
+	public Object geneTableSelect(Map<String,Object> model){
+		return "geneMod/table";
+	}
 	
-	
-	@RequestMapping("/tableSelect")
-	public Object geneConfig(Map<String,Object> model){
-		return "geneMod/tableSelect";
+	@RequestMapping("/gene/column")
+	public Object geneTableColumn(Map<String,Object> model,String tableName,HttpServletResponse resp) throws IOException{
+		if(tableName==null){
+			resp.sendRedirect("/gene/table");
+			return null;
+		}
+		model.put("tableName", tableName);
+		return "geneMod/column";
 	}
 	
 	@RequestMapping("/")

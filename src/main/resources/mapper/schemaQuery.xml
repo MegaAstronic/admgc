@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.moonj.admgc.mapper.SchemaQueryMapper">
-	<select id="showTables" resultType="java.util.HashMap">
+	<select id="showTables" resultType="java.util.HashMap"
+		parameterType="String">
 		select
 		TABLE_NAME,TABLE_TYPE,ENGINE,TABLE_ROWS,TABLE_COMMENT from
-		information_schema.TABLES where TABLE_SCHEMA='admgc'
+		information_schema.TABLES where TABLE_SCHEMA=#{dbname}
 	</select>
 	<select id="showTablesPage" resultType="java.util.HashMap">
 		select
 		TABLE_NAME,TABLE_TYPE,ENGINE,TABLE_ROWS,TABLE_COMMENT from
-		information_schema.TABLES where TABLE_SCHEMA='admgc'
+		information_schema.TABLES where TABLE_SCHEMA=#{dbname}
+	</select>
+	<select id="listColumn" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		select COLUMN_NAME,DATA_TYPE,CHARACTER_MAXIMUM_LENGTH,IS_NULLABLE,COLUMN_DEFAULT,COLUMN_COMMENT 
+		from information_schema.COLUMNS 
+		where TABLE_NAME=#{data.tableName} AND TABLE_SCHEMA=#{data.dbname} 
 	</select>
 </mapper>

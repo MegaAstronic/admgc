@@ -19,14 +19,15 @@
     	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
   			<legend>Tables in database</legend>
 		</fieldset>
-    	<table class="layui-table" lay-data="{height:315, url:'/api/table/show', page:true, id:'test'}" lay-filter="test">
+    	<table class="layui-table" lay-data="{height:315, url:'/api/table/show', page:{limit:10}, id:'tabletable'}" lay-filter="test">
 		  <thead>
 		    <tr>
 		      <th lay-data="{field:'TABLE_NAME', width:200}">表名</th>
 		      <th lay-data="{field:'TABLE_ROWS', width:80, sort: true}">行数</th>
 		      <th lay-data="{field:'ENGINE', width:100}">引擎</th>
 		      <th lay-data="{field:'TABLE_TYPE', width:120}">表类型</th>
-		      <th lay-data="{field:'TABLE_COMMENT'}">注释</th>
+		      <th lay-data="{field:'TABLE_COMMENT', width:300}">注释</th>
+		      <th lay-data="{field:'TABLE_COMMENT', width:300 ,templet:'#tablefunc'}" >功能</th>
 		    </tr>
 		  </thead>
 		</table>
@@ -46,5 +47,9 @@ layui.use(['element','table'], function(){
   
 });
 </script>
+<script type="text/html" id="tablefunc">
+  <a href="/gene/column?tableName={{ d.TABLE_NAME}}" class="layui-btn layui-btn-primary layui-btn-xs">选择</a>
+</script>
+      
 </body>
 </html>
