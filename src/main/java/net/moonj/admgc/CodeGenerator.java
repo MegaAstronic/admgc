@@ -86,7 +86,7 @@ public class CodeGenerator {
         cfg.setFileOutConfigList(focList);
         mpg.setCfg(cfg);
         
-        TemplateConfig tempConfig  = new TemplateConfig().setXml(null).setController(null);
+        TemplateConfig tempConfig  = new TemplateConfig().setXml(null).setController("/templates/geneMod/temp/Controller.java");
         
         mpg.setTemplate(tempConfig);
 

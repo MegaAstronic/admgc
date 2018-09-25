@@ -18,4 +18,7 @@ public interface SchemaQueryMapper {
 	 * @return
 	 */
 	public IPage<Map<String,Object>> listColumn(Page<Map<String,Object>> page,Map<String,Object> data);
+
+	public String getPrimaryKey(Map<String,Object> data);
+
 }

@@ -37,4 +37,11 @@ public class SchemaQueryService {
 		return schemaQueryMapper.listColumn(page,data);
 	}
 	
+	public String getPrimaryKey(String tableName){
+		Map<String,Object> data = new HashMap<>();
+		data.put("tableName", tableName);
+		data.put("dbname", dbname);
+		return schemaQueryMapper.getPrimaryKey(data);
+	}
+	
 }

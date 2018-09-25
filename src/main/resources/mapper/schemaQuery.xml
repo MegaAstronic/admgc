@@ -12,9 +12,19 @@
 		TABLE_NAME,TABLE_TYPE,ENGINE,TABLE_ROWS,TABLE_COMMENT from
 		information_schema.TABLES where TABLE_SCHEMA=#{dbname}
 	</select>
-	<select id="listColumn" resultType="java.util.HashMap" parameterType="java.util.HashMap">
-		select COLUMN_NAME,DATA_TYPE,CHARACTER_MAXIMUM_LENGTH,IS_NULLABLE,COLUMN_DEFAULT,COLUMN_COMMENT 
-		from information_schema.COLUMNS 
-		where TABLE_NAME=#{data.tableName} AND TABLE_SCHEMA=#{data.dbname} 
+	<select id="listColumn" resultType="java.util.HashMap"
+		parameterType="java.util.Map">
+		select
+		COLUMN_NAME,DATA_TYPE,CHARACTER_MAXIMUM_LENGTH,IS_NULLABLE,COLUMN_DEFAULT,COLUMN_COMMENT
+		from information_schema.COLUMNS
+		where TABLE_NAME=#{data.tableName} AND TABLE_SCHEMA=#{data.dbname}
+	</select>
+
+	<select id="getPrimaryKey" parameterType="java.util.Map" resultType="String">
+		SELECT column_name
+		FROM INFORMATION_SCHEMA.`KEY_COLUMN_USAGE`
+		WHERE table_name=#{data.tableName}
+		AND CONSTRAINT_SCHEMA=#{data.dbname}
+		AND constraint_name='PRIMARY'
 	</select>
 </mapper>

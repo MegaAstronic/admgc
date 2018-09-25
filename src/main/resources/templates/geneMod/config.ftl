@@ -29,7 +29,8 @@
 			      <th lay-data="{field:'IS_NULLABLE', width:120}">可以为空</th>
 			      <th lay-data="{field:'COLUMN_DEFAULT',width:200}">默认值</th>
 			      <th lay-data="{field:'COLUMN_COMMENT',width:200}">注释</th>
-			      <th lay-data="{field:'COLUMN_COMMENT',width:100 , templet:'#tablefunc'}">需要查询</th>
+			      <th lay-data="{width:100 , templet:'#tablefunc'}">需要查询</th>
+			      <th lay-data="{width:200 , templet:'#alias'}">别名</th>
 			    </tr>
 			  </thead>
 			</table>
@@ -67,6 +68,9 @@ layui.use(['element','table','form'], function(){
 
 <script type="text/html" id="tablefunc">
    <input type="checkbox" name="col:{{d.COLUMN_NAME}}" lay-skin="switch" lay-text="ON|OFF" checked="true">
+</script>	
+<script type="text/html" id="alias">
+   <input type="text" name="alias:{{d.COLUMN_NAME}}" required lay-verify="required" placeholder="表中展示的别名" autocomplete="off" class="layui-input" value="{{d.COLUMN_NAME}}">   
 </script>	
 
 </body>

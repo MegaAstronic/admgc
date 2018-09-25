@@ -22,7 +22,9 @@ public class GeneConfig {
 	
 	private Map<String,ShowType> updateColumnShowType;
 	
+	private String primaryKey;
 	
+	private Map<String,String> aliasMap;
 	
 	public static enum ShowType{
 		shortText,longText,datetime
@@ -76,6 +78,22 @@ public class GeneConfig {
 
 	public void setUpdateColumnShowType(Map<String, ShowType> updateColumnShowType) {
 		this.updateColumnShowType = updateColumnShowType;
+	}
+
+	public String getPrimaryKey() {
+		return primaryKey;
+	}
+
+	public void setPrimaryKey(String primaryKey) {
+		this.primaryKey = primaryKey;
+	}
+
+	public Map<String, String> getAliasMap() {
+		return aliasMap;
+	}
+
+	public void setAliasMap(Map<String, String> aliasMap) {
+		this.aliasMap = aliasMap;
 	}
 	
 	

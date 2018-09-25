@@ -1,7 +1,9 @@
-package net.moonj.admgc.util;
+package net.moonj.admgc.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,7 @@ import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 
+import net.moonj.admgc.util.TemplateUtils;
 import net.moonj.admgc.vo.GeneConfig;
 
 @Service
@@ -34,7 +37,19 @@ public class GeneratorService {
 	@Value("${spring.datasource.password}")
 	private String password;
 	
-	public void generate(GeneConfig config){
+	private String viewTargetPath;
+	
+	public void generate(GeneConfig config) throws Exception{
+		mybatisplusGenerate(config);
+		customGenerate(config);
+	}
+	private void customGenerate(GeneConfig config) throws Exception{
+		Map<String,Object> model = new HashMap<>();
+		model.put("config", config);
+		//TODO
+		TemplateUtils.srcProcess("/geneMod/temp/query.ftl", model, viewTargetPath+"query.ftl");
+	}
+	private void mybatisplusGenerate(GeneConfig config){
 		// 代码生成器
         AutoGenerator mpg = new AutoGenerator();
 
@@ -80,7 +95,7 @@ public class GeneratorService {
         cfg.setFileOutConfigList(focList);
         mpg.setCfg(cfg);
         
-        TemplateConfig tempConfig  = new TemplateConfig().setXml(null).setController(null);
+        TemplateConfig tempConfig  = new TemplateConfig().setXml(null).setController("/templates/geneMod/temp/Controller.java");
         
         mpg.setTemplate(tempConfig);
 

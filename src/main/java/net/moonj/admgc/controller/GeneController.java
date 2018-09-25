@@ -3,22 +3,30 @@ package net.moonj.admgc.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import net.moonj.admgc.mapper.SchemaQueryMapper;
+import net.moonj.admgc.service.SchemaQueryService;
 import net.moonj.admgc.vo.GeneConfig;
 import net.moonj.admgc.vo.GeneConfig.Function;
 import net.moonj.admgc.vo.GeneConfig.ShowType;
 
 @Controller
 public class GeneController {
+	
+	
+	@Resource
+	private SchemaQueryService schemaQueryService;
 	
 	
 	private static final String prefix = "/geneMod/";
@@ -38,13 +46,13 @@ public class GeneController {
 		}
 		
 		config.setTableName(tableName);
+		config.setPrimaryKey(schemaQueryService.getPrimaryKey(tableName));
 		model.put("tableName", tableName);
 		return prefix+"config";
 	}
 	
 	@RequestMapping("/gene/config/handle")
 	public Object geneConfig(Map<String,Object> model,HttpServletRequest req,HttpServletResponse resp) throws IOException{
-		List<String> configAttr = req.getParameterMap().entrySet().stream().map(x->x.getKey()).collect(Collectors.toList());
 		GeneConfig config = (GeneConfig) req.getSession().getAttribute("geneConfig");
 		if(config == null){
 			resp.sendRedirect("/gene/table");
@@ -52,11 +60,16 @@ public class GeneController {
 		}
 		config.setFunctions(new ArrayList<>());
 		config.setQueryColumns(new ArrayList<>());
-		configAttr.forEach(e->{
-			if(e.startsWith("func:")){
-				config.getFunctions().add(GeneConfig.Function.valueOf(e.split(":")[1]));
-			}else if(e.startsWith("col:")){
-				config.getQueryColumns().add(e.split(":")[1]);
+		config.setAliasMap(new LinkedHashMap<String, String>());
+		req.getParameterMap().entrySet().forEach(x->{
+			String k = x.getKey();
+			String v = x.getValue()[0];
+			if(k.startsWith("func:")){
+				config.getFunctions().add(GeneConfig.Function.valueOf(k.split(":")[1]));
+			}else if(k.startsWith("col:")){
+				config.getQueryColumns().add(k.split(":")[1]);
+			}else if (k.startsWith("alias:")){
+				config.getAliasMap().put(k.split(":")[1], v);
 			}
 		});
 		resp.sendRedirect("/gene/insert");

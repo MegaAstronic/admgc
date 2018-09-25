@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 
 import net.moonj.admgc.service.SchemaQueryService;
 import net.moonj.admgc.vo.GeneConfig;
@@ -45,10 +44,10 @@ public class MainRestController {
 			limit = 10;
 		}
 		
-		Map<String,Object> json = new HashMap<>();
+		
 		IPage<Map<String,Object>> pages = schemaQueryService.showTablesPage(new Page<>(page, limit));
 		List<Map<String,Object>> queryAnswer = pages.getRecords();
-		
+		Map<String,Object> json = new HashMap<>();
 		json.put("code", "0");
 		json.put("msg", "");
 		json.put("count",pages.getTotal());
