@@ -1,10 +1,12 @@
 package net.moonj.admgc.controller;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +20,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 
 import net.moonj.admgc.service.SchemaQueryService;
+import net.moonj.admgc.vo.GeneConfig;
 
 @RestController
 public class MainRestController {
@@ -54,19 +57,28 @@ public class MainRestController {
 	}
 	
 	@RequestMapping("/api/table/column/{tableName}")
-	public Object listColumn(Integer page,Integer limit,@PathVariable("tableName") String tableName){
+	public Object listColumn(Integer page,Integer limit,@PathVariable("tableName") String tableName,HttpServletRequest req){
 		
 		
 		if(page==null){
 			page = 1;
 		}
 		if(limit == null){
-			limit = 10;
+			limit = 100;
 		}
 		
 		Map<String,Object> json = new HashMap<>();
 		IPage<Map<String,Object>> pages = schemaQueryService.listColumn(new Page<>(page, limit),tableName);
 		List<Map<String,Object>> queryAnswer = pages.getRecords();
+		
+		Map<String,Map<String,Object>> columnMsg = new LinkedHashMap<>();
+		GeneConfig config = (GeneConfig) req.getSession().getAttribute("geneConfig");
+		if(config!=null){
+			queryAnswer.forEach(x->{
+				columnMsg.put((String) x.get("COLUMN_NAME"), x);
+			});
+		}
+		config.setColumnMsg(columnMsg);
 		
 		json.put("code", "0");
 		json.put("msg", "");

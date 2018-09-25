@@ -7,8 +7,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -31,20 +34,11 @@ public class MainController {
 	@Resource
 	private SchemaQueryService schemaQueryService;
 	
-	@RequestMapping("/gene/table")
-	public Object geneTableSelect(Map<String,Object> model){
-		return "geneMod/table";
-	}
 	
-	@RequestMapping("/gene/column")
-	public Object geneTableColumn(Map<String,Object> model,String tableName,HttpServletResponse resp) throws IOException{
-		if(tableName==null){
-			resp.sendRedirect("/gene/table");
-			return null;
-		}
-		model.put("tableName", tableName);
-		return "geneMod/column";
-	}
+
+	private static final Logger logger = LoggerFactory.getLogger(MainController.class);
+
+
 	
 	@RequestMapping("/")
 	public Object index(Map<String,Object> model) throws Exception{
