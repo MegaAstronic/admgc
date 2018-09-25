@@ -80,7 +80,7 @@ public class GeneratorService {
         cfg.setFileOutConfigList(focList);
         mpg.setCfg(cfg);
         
-        TemplateConfig tempConfig  = new TemplateConfig().setXml(null).setService(null);
+        TemplateConfig tempConfig  = new TemplateConfig().setXml(null).setController(null);
         
         mpg.setTemplate(tempConfig);
 
