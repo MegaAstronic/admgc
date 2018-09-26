@@ -17,7 +17,9 @@ public class GeneConfig {
 	}
 	
 	private List<String> queryColumns;
-
+	
+	private Map<String,String> queryColumnsNamingMap;
+	
 	private Map<String,ShowType> insertColumnShowType;
 	
 	private Map<String,ShowType> updateColumnShowType;
@@ -95,6 +97,16 @@ public class GeneConfig {
 	public void setAliasMap(Map<String, String> aliasMap) {
 		this.aliasMap = aliasMap;
 	}
+
+	public Map<String, String> getQueryColumnsNamingMap() {
+		return queryColumnsNamingMap;
+	}
+
+	public void setQueryColumnsNamingMap(Map<String, String> queryColumnsNamingMap) {
+		this.queryColumnsNamingMap = queryColumnsNamingMap;
+	}
+
+
 	
 	
 }

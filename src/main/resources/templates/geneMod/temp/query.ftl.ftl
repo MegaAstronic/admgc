@@ -24,7 +24,7 @@
 		  <thead>
 		    <tr>
           [#list config.queryColumns as columnName]
-		      <th lay-data="{field:'${columnName}'}">${config.aliasMap[columnName]}</th>
+		      <th lay-data="{field:'${config.queryColumnsNamingMap[columnName]}'}">${config.aliasMap[columnName]}</th>
           [/#list]
           		<th lay-data="{width:250 ,templet:'#tablefunc'}" >功能</th>
 		    </tr>

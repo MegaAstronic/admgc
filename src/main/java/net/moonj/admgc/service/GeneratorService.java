@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,7 @@ public class GeneratorService {
 	@Value("${spring.datasource.password}")
 	private String password;
 	
+	private String parentPackage = "net.moonj.admgc.genecode";
 	private String viewTargetPath = "templates/genecode/";
 	
 	public void generate(GeneConfig config) throws Exception{
@@ -46,9 +48,23 @@ public class GeneratorService {
 	private void customGenerate(GeneConfig config) throws Exception{
 		Map<String,Object> model = new HashMap<>();
 		model.put("config", config);
+		
+		config.setQueryColumnsNamingMap(config.getQueryColumns().stream().collect(Collectors.toMap(k->k, e->{
+			String[] part = e.split("_");
+			StringBuffer sb = new StringBuffer(part[0]);
+			for(int i = 1;i<part.length;i++){
+				sb.append(upperCap(part[i]));
+			}
+			return sb.toString();
+		})));
 		//TODO
 		TemplateUtils.SrcMainResourceProcess("/geneMod/temp/query.ftl.ftl", model, viewTargetPath+config.getTableName()+"/query.ftl");
 	}
+	
+	private String upperCap(String str){
+		return str.substring(0, 1).toUpperCase()+str.substring(1);
+	}
+	
 	private void mybatisplusGenerate(GeneConfig config){
 		// 代码生成器
         AutoGenerator mpg = new AutoGenerator();
@@ -73,7 +89,7 @@ public class GeneratorService {
         // 包配置
         PackageConfig pc = new PackageConfig();
         pc.setModuleName(config.getTableName());
-        pc.setParent("net.moonj.admgc.genecode");
+        pc.setParent(parentPackage);
         mpg.setPackageInfo(pc);
 
         // 自定义配置

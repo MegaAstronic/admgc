@@ -25,7 +25,7 @@
 		      <th lay-data="{field:'id'}">id</th>
 		      <th lay-data="{field:'nickname'}">nickname</th>
 		      <th lay-data="{field:'username'}">username</th>
-		      <th lay-data="{field:'reg_at'}">reg_at</th>
+		      <th lay-data="{field:'regAt'}">reg_at</th>
           		<th lay-data="{width:250 ,templet:'#tablefunc'}" >功能</th>
 		    </tr>
 		  </thead>
