@@ -38,7 +38,7 @@ public class SchemaQueryService {
 	}
 	
 	public String getPrimaryKey(String tableName){
-		Map<String,Object> data = new HashMap<>();
+		Map<String,String> data = new HashMap<>();
 		data.put("tableName", tableName);
 		data.put("dbname", dbname);
 		return schemaQueryMapper.getPrimaryKey(data);

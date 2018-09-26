@@ -23,8 +23,8 @@
 	<select id="getPrimaryKey" parameterType="java.util.Map" resultType="String">
 		SELECT column_name
 		FROM INFORMATION_SCHEMA.`KEY_COLUMN_USAGE`
-		WHERE table_name=#{data.tableName}
-		AND CONSTRAINT_SCHEMA=#{data.dbname}
+		WHERE table_name=#{tableName}
+		AND CONSTRAINT_SCHEMA=#{dbname}
 		AND constraint_name='PRIMARY'
 	</select>
 </mapper>

@@ -11,11 +11,5 @@ CREATE TABLE member(
     CONSTRAINT PRIMARY KEY (id)
 )ENGINE = innodb;
 
-
- SELECT column_name
-  FROM INFORMATION_SCHEMA.`KEY_COLUMN_USAGE` 
- WHERE table_name='member' 
- AND CONSTRAINT_SCHEMA='admgc'
- AND constraint_name='PRIMARY'
-
-select COLUMN_NAME,DATA_TYPE,CHARACTER_MAXIMUM_LENGTH,IS_NULLABLE,COLUMN_DEFAULT,COLUMN_COMMENT from information_schema.COLUMNS where TABLE_NAME='member' ;
+INSERT INTO member(id,nickname,username,reg_at) VALUES("1","Astronic","Astronic","2018-09-26");
+INSERT INTO member(id,nickname,username,reg_at) VALUES("2","MegaAstronic","myusername","2018-09-24");

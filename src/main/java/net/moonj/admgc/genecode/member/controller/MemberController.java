@@ -1,4 +1,4 @@
-package ${package.Controller};
+package net.moonj.admgc.genecode.member.controller;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -13,32 +13,32 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
-import net.moonj.admgc.genecode.${table.name}.entity.${table.entityName};
-import net.moonj.admgc.genecode.${table.name}.service.${table.serviceName};
+import net.moonj.admgc.genecode.member.entity.Member;
+import net.moonj.admgc.genecode.member.service.IMemberService;
 
 @Controller
-public class ${table.controllerName} {
+public class MemberController {
 	
 	@Autowired
-	private ${table.serviceName} ${table.name}Service;
+	private IMemberService memberService;
 	
-	private String prefix = "/genecode/${table.name}/";
+	private String prefix = "/genecode/member/";
 	
-	@RequestMapping("/pages/${table.name}/query")
+	@RequestMapping("/pages/member/query")
 	public Object queryTable(){
 		return prefix + "query";
 	}
 	
-	@RequestMapping("/pages/${table.name}/insert/{pk}")
+	@RequestMapping("/pages/member/insert/{pk}")
 	public Object insert(@PathVariable("pk") Serializable pk){
 		return prefix + "insert";
 	}
-	@RequestMapping("/pages/${table.name}/update/{pk}")
+	@RequestMapping("/pages/member/update/{pk}")
 	public Object update(@PathVariable("pk") Serializable pk){
 		return prefix + "update";
 	}
 	
-	@RequestMapping(path = "/api/${table.name}/")
+	@RequestMapping(path = "/api/member")
 	public @ResponseBody Object doQuery(Integer page,Integer limit){
 		if(page==null){
 			page = 1;
@@ -46,7 +46,10 @@ public class ${table.controllerName} {
 		if(limit == null){
 			limit = 10;
 		}
-		IPage<${table.entityName}> pages = ${table.name}Service.page(new Page<>(page, limit), null);
+		IPage<Member> pages = memberService.page(new Page<>(page, limit), null);
+		
+//		System.out.println(pages.getRecords());
+		
 		Map<String,Object> json = new HashMap<>();
 		json.put("code", "0");
 		json.put("msg", "");
@@ -54,21 +57,21 @@ public class ${table.controllerName} {
 		json.put("data", pages.getRecords());
 		return json;
 	}
-	@RequestMapping(path = "/pages/${table.name}/delete/do/{pk}")
+	@RequestMapping(path = "/pages/member/delete/do/{pk}")
 	public Object doDelete(@PathVariable("pk") Serializable pk){
-		${table.name}Service.removeById(pk);
+		memberService.removeById(pk);
 		return prefix + "query";
 	}
 
-	@RequestMapping(path = "/pages/${table.name}/insert/do")
-	public Object doInsert(${table.entityName} entity){
-		${table.name}Service.save(entity);
+	@RequestMapping(path = "/pages/member/insert/do")
+	public Object doInsert(Member entity){
+		memberService.save(entity);
 		return prefix + "query";
 	}
 	
-	@RequestMapping(path = "/pages/${table.name}/update/do")
-	public Object doUpdate(${table.entityName} entity){
-		${table.name}Service.updateById(entity);
+	@RequestMapping(path = "/pages/member/update/do")
+	public Object doUpdate(Member entity){
+		memberService.updateById(entity);
 		return prefix + "query";
 	}
 }

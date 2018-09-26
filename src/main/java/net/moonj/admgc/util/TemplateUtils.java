@@ -67,11 +67,13 @@ public class TemplateUtils {
      * @throws IOException
      * @throws TemplateException
      */
-    public static void srcProcess(String templatePath,Map<?, ?> model,String targetClasspathpath) throws IOException, TemplateException{
+    public static void SrcMainResourceProcess(String templatePath,Map<?, ?> model,String targetClasspathpath) throws IOException, TemplateException{
 		Template temp = TemplateUtils.getTemplate(templatePath);
 		String projectPath = System.getProperty("user.dir");
 		String srcPath = projectPath+"/src/main/resources/"+targetClasspathpath;
-		PrintWriter srcPW = new PrintWriter(new File(srcPath));
+		File srcFile = new File(srcPath);
+		new File(srcFile.getParent()).mkdirs();
+		PrintWriter srcPW = new PrintWriter(srcFile);
 		temp.process(model, srcPW); //源代码
 		srcPW.close();
     }

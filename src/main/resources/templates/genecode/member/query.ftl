@@ -1,4 +1,3 @@
-[#ftl]
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,12 +19,13 @@
     	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
   			<legend>Tables in database</legend>
 		</fieldset>
-    	<table class="layui-table" lay-data="{height:315, url:'/api/${config.tableName}/', page:{limit:10}, id:'tabletable'}" lay-filter="test">
+    	<table class="layui-table" lay-data="{height:315, url:'/api/member/', page:{limit:10}, id:'tabletable'}" lay-filter="test">
 		  <thead>
 		    <tr>
-          [#list config.queryColumns as columnName]
-		      <th lay-data="{field:'${columnName}'}">${config.aliasMap[columnName]}</th>
-          [/#list]
+		      <th lay-data="{field:'id'}">id</th>
+		      <th lay-data="{field:'nickname'}">nickname</th>
+		      <th lay-data="{field:'username'}">username</th>
+		      <th lay-data="{field:'reg_at'}">reg_at</th>
           		<th lay-data="{width:250 ,templet:'#tablefunc'}" >功能</th>
 		    </tr>
 		  </thead>
@@ -47,7 +47,7 @@ layui.use(['element','table'], function(){
 });
 </script>
 <script type="text/html" id="tablefunc">
-  <a href="/pages/${config.tableName}/delete/do/{{d.${config.primaryKey}}}" class="layui-btn layui-btn-primary layui-btn-xs">删除</a>
+  <a href="/pages/member/delete/do/{{d.id}}" class="layui-btn layui-btn-primary layui-btn-xs">删除</a>
 </script>
       
 </body>

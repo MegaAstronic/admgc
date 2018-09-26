@@ -37,17 +37,17 @@ public class GeneratorService {
 	@Value("${spring.datasource.password}")
 	private String password;
 	
-	private String viewTargetPath;
+	private String viewTargetPath = "templates/genecode/";
 	
 	public void generate(GeneConfig config) throws Exception{
-		mybatisplusGenerate(config);
 		customGenerate(config);
+		mybatisplusGenerate(config);
 	}
 	private void customGenerate(GeneConfig config) throws Exception{
 		Map<String,Object> model = new HashMap<>();
 		model.put("config", config);
 		//TODO
-		TemplateUtils.srcProcess("/geneMod/temp/query.ftl", model, viewTargetPath+"query.ftl");
+		TemplateUtils.SrcMainResourceProcess("/geneMod/temp/query.ftl.ftl", model, viewTargetPath+config.getTableName()+"/query.ftl");
 	}
 	private void mybatisplusGenerate(GeneConfig config){
 		// 代码生成器
@@ -108,7 +108,7 @@ public class GeneratorService {
         strategy.setRestControllerStyle(true);
 //        strategy.setSuperControllerClass("com.baomidou.ant.common.BaseController");
         strategy.setInclude(config.getTableName());
-        strategy.setSuperEntityColumns("id");
+//        strategy.setSuperEntityColumns("id");
         strategy.setControllerMappingHyphenStyle(true);
         strategy.setTablePrefix(pc.getModuleName() + "_");
         mpg.setStrategy(strategy);

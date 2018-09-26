@@ -14,8 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import net.moonj.admgc.mapper.SchemaQueryMapper;
+import net.moonj.admgc.service.GeneratorService;
 import net.moonj.admgc.service.SchemaQueryService;
 import net.moonj.admgc.vo.GeneConfig;
 import net.moonj.admgc.vo.GeneConfig.Function;
@@ -28,12 +30,14 @@ public class GeneController {
 	@Resource
 	private SchemaQueryService schemaQueryService;
 	
+	@Resource
+	private GeneratorService generatorService;
 	
-	private static final String prefix = "/geneMod/";
+	private static final String prefixFTL = "/geneMod/";
 	@RequestMapping("/gene/table")
 	public Object geneTableSelect(Map<String,Object> model,HttpServletRequest req){
 		req.getSession().setAttribute("geneConfig", new GeneConfig());
-		return prefix+"table";
+		return prefixFTL+"table";
 	}
 	
 	@RequestMapping("/gene/config")
@@ -47,8 +51,9 @@ public class GeneController {
 		
 		config.setTableName(tableName);
 		config.setPrimaryKey(schemaQueryService.getPrimaryKey(tableName));
+//		System.out.println("[[pk]]"+config.getPrimaryKey());
 		model.put("tableName", tableName);
-		return prefix+"config";
+		return prefixFTL+"config";
 	}
 	
 	@RequestMapping("/gene/config/handle")
@@ -86,12 +91,13 @@ public class GeneController {
 			resp.sendRedirect("/gene/update");
 			return null;
 		}
-		model.put("columns", config.getColumnMsg().entrySet().stream().map(x->x.getKey()).collect(Collectors.toList()));
+		List<String> columns = config.getColumnMsg().entrySet().stream().map(x->x.getKey()).collect(Collectors.toList());
+		model.put("columns", columns );
 		model.put("columnMsg",config.getColumnMsg());
 		
 		
 		
-		return prefix+"insert";
+		return prefixFTL+"insert";
 	}
 	
 	@RequestMapping("/gene/insert/handle")
@@ -110,7 +116,8 @@ public class GeneController {
 			config.getInsertColumnShowType().put(e.getKey(), ShowType.valueOf(e.getValue()[0]));
 		});
 		
-		return prefix+"update";
+		resp.sendRedirect("/gene/update");
+		return null;
 	}
 	
 	@RequestMapping("/gene/update")
@@ -119,13 +126,15 @@ public class GeneController {
 		if(config == null){
 			resp.sendRedirect("/gene/table");
 			return null;
-		} else if(!config.getFunctions().contains(Function.insert)){
+		} else if(!config.getFunctions().contains(Function.update)){
 			resp.sendRedirect("/gene/do");
 			return null;
 		}	
-		model.put("columns", config.getColumnMsg().entrySet().stream().map(x->x.getKey()).collect(Collectors.toList()));
+		List<String> columns = config.getColumnMsg().entrySet().stream().map(x->x.getKey()).collect(Collectors.toList());
+//		System.out.println("[columns]"+columns);
+		model.put("columns", columns );
 		model.put("columnMsg",config.getColumnMsg());
-		return prefix+"update";
+		return prefixFTL+"update";
 	}
 	
 	@RequestMapping("/gene/update/handle")
@@ -143,17 +152,18 @@ public class GeneController {
 		req.getParameterMap().entrySet().forEach(e->{
 			config.getUpdateColumnShowType().put(e.getKey(), ShowType.valueOf(e.getValue()[0]));
 		});
-		
+		resp.sendRedirect("/gene/do");
 		return null;
 	}
 	@RequestMapping("/gene/do")
-	public Object geneDo(Map<String,Object> model,HttpServletRequest req,HttpServletResponse resp) throws IOException{
+	public @ResponseBody Object geneDo(Map<String,Object> model,HttpServletRequest req,HttpServletResponse resp) throws Exception{
 		GeneConfig config = (GeneConfig) req.getSession().getAttribute("geneConfig");
 		if(config == null){
 			resp.sendRedirect("/gene/table");
 			return null;
 		}
 		//TODO
+		generatorService.generate((GeneConfig) req.getSession().getAttribute("geneConfig"));
 		return config;
 	}
 }
