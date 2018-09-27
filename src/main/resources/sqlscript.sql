@@ -6,7 +6,7 @@ CREATE TABLE member(
 
     id      VARCHAR(20) comment 'identifier',  
     nickname    VARCHAR(20),
-    username    VARCHAR(20),
+    username    VARCHAR(20) NOT NULL,
     reg_at      datetime,
     CONSTRAINT PRIMARY KEY (id)
 )ENGINE = innodb;

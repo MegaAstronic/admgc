@@ -34,7 +34,8 @@ public class ${table.controllerName} {
 		return prefix + "insert";
 	}
 	@RequestMapping("/pages/${table.name}/update/{pk}")
-	public Object update(@PathVariable("pk") Serializable pk){
+	public Object update(@PathVariable("pk") Serializable pk,Map<String,Object> model){
+		model.put("entity", ${table.name}Service.getById(pk));
 		return prefix + "update";
 	}
 	

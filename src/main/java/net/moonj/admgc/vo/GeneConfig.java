@@ -7,6 +7,7 @@ public class GeneConfig {
 
 	private String tableName;
 	
+	private String entityName;
 	/**
 	 * 
 	 */
@@ -17,7 +18,9 @@ public class GeneConfig {
 	}
 	
 	private List<String> queryColumns;
-	
+	/**
+	 * Entity中字段的名称，其他地方默认都是表字段名称
+	 */
 	private Map<String,String> queryColumnsNamingMap;
 	
 	private Map<String,ShowType> insertColumnShowType;
@@ -28,11 +31,20 @@ public class GeneConfig {
 	
 	private Map<String,String> aliasMap;
 	
+	
+	
 	public static enum ShowType{
 		shortText,longText,datetime
 	}
-	
+	/**
+	 * Key : COLUMN_NAME
+	 * Value:
+	 * 	Key:COLUMN_NAME,DATA_TYPE,CHARACTER_MAXIMUM_LENGTH,IS_NULLABLE(YESNO),COLUMN_DEFAULT,COLUMN_COMMENT
+	 * 	
+	 */	
 	private Map<String,Map<String,Object>> columnMsg;
+	
+	private String dateFormat = "yyyy-MM-dd";
 	
 	public Map<String, Map<String, Object>> getColumnMsg() {
 		return columnMsg;
@@ -104,6 +116,22 @@ public class GeneConfig {
 
 	public void setQueryColumnsNamingMap(Map<String, String> queryColumnsNamingMap) {
 		this.queryColumnsNamingMap = queryColumnsNamingMap;
+	}
+
+	public String getDateFormat() {
+		return dateFormat;
+	}
+
+	public void setDateFormat(String dateFormat) {
+		this.dateFormat = dateFormat;
+	}
+
+	public String getEntityName() {
+		return entityName;
+	}
+
+	public void setEntityName(String entityName) {
+		this.entityName = entityName;
 	}
 
 

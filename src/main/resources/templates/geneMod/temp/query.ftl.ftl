@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <title>生成</title>
+  <title>查询${config.entityName}</title>
   <link rel="stylesheet" href="/layui/css/layui.css">
   <script src="/layui/layui.js"></script>
 </head>
@@ -18,8 +18,12 @@
     <!-- 内容主体区域 -->
     <div style="padding: 15px;">
     	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-  			<legend>Tables in database</legend>
+  			<legend>query ${config.entityName}</legend>
 		</fieldset>
+		
+		<a href="/pages/${config.tableName}/insert" class="layui-btn layui-btn">增加数据</a>
+
+		
     	<table class="layui-table" lay-data="{height:315, url:'/api/${config.tableName}/', page:{limit:10}, id:'tabletable'}" lay-filter="test">
 		  <thead>
 		    <tr>
@@ -47,7 +51,8 @@ layui.use(['element','table'], function(){
 });
 </script>
 <script type="text/html" id="tablefunc">
-  <a href="/pages/${config.tableName}/delete/do/{{d.${config.primaryKey}}}" class="layui-btn layui-btn-primary layui-btn-xs">删除</a>
+  <a href="/pages/${config.tableName}/update/{{d.${config.primaryKey}}}" class="layui-btn layui-btn layui-btn-xs">修改</a>
+  <a href="/pages/${config.tableName}/delete/do/{{d.${config.primaryKey}}}" class="layui-btn layui-btn-danger layui-btn-xs">删除</a>
 </script>
       
 </body>

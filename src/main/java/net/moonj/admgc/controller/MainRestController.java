@@ -47,7 +47,7 @@ public class MainRestController {
 		
 		IPage<Map<String,Object>> pages = schemaQueryService.showTablesPage(new Page<>(page, limit));
 		List<Map<String,Object>> queryAnswer = pages.getRecords();
-		Map<String,Object> json = new HashMap<>();
+		Map<String,Object> json = new LinkedHashMap<>();
 		json.put("code", "0");
 		json.put("msg", "");
 		json.put("count",pages.getTotal());

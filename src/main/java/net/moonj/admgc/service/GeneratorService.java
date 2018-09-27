@@ -50,22 +50,26 @@ public class GeneratorService {
 	private void customGenerate(GeneConfig config) throws Exception{
 		Map<String,Object> model = new HashMap<>();
 		model.put("config", config);
-		
-		config.setQueryColumnsNamingMap(config.getQueryColumns().stream().collect(Collectors.toMap(k->k, e->{
-			String[] part = e.split("_");
-			StringBuffer sb = new StringBuffer(part[0]);
-			for(int i = 1;i<part.length;i++){
-				sb.append(upperCap(part[i]));
-			}
-			return sb.toString();
-		})));
-        //TODO
+		config.setEntityName(underlineToCamel(config.getTableName()));
+		config.setQueryColumnsNamingMap(config.getQueryColumns().stream().collect(Collectors.toMap(k->k, this::underlineToCamel)));
+		//TODO
         //query
 		TemplateUtils.SrcMainResourceProcess("/geneMod/temp/query.ftl.ftl", model, viewTargetPath+config.getTableName()+"/query.ftl");
         //insert
         TemplateUtils.SrcMainResourceProcess("/geneMod/temp/insert.ftl.ftl", model, viewTargetPath+config.getTableName()+"/insert.ftl");
-        
+        //update
+        TemplateUtils.SrcMainResourceProcess("/geneMod/temp/update.ftl.ftl", model, viewTargetPath+config.getTableName()+"/update.ftl");
+       
     }
+	
+	private String underlineToCamel(String e){
+		String[] part = e.split("_");
+		StringBuffer sb = new StringBuffer(part[0]);
+		for(int i = 1;i<part.length;i++){
+			sb.append(upperCap(part[i]));
+		}
+		return sb.toString();
+	}
 	
 	private String upperCap(String str){
 		return str.substring(0, 1).toUpperCase()+str.substring(1);

@@ -11,7 +11,7 @@
 		<link href="/" name="主页" />
 		<dir name="页面生成">
 			<link href="/gene/table" name="起步" />
-			<link href="/gene/column" name="配置" />
+			<link href="#" name="配置" />
 			<link href="#" name="页面管理" />
 		</dir>
 		<link href="#" name="关于" />

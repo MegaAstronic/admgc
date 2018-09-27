@@ -10,7 +10,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DateConverterConfig implements Converter<String, Date> {
+public class StringToDateConverter implements Converter<String, Date> {
 
     private static final List<String> formarts = new ArrayList<>(4);
     static{

@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <title>生成</title>
+  <title>增加数据${config.entityName}</title>
   <link rel="stylesheet" href="/layui/css/layui.css">
   <script src="/layui/layui.js"></script>
 </head>
@@ -18,9 +18,9 @@
     <!-- 内容主体区域 -->
     <div style="padding: 15px;">
     	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-  			<legend>Insert ${config.tableName}</legend>
+  			<legend>Insert ${config.entityName}</legend>
 		</fieldset>
-		<form class="layui-form" action="/pages/${config.tableName}/insert/do">
+		<form class="layui-form" action="/pages/${config.tableName}/insert/do" method="POST">
 			
 		[#list config.insertColumnShowType?keys as key]
 			
