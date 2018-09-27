@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
@@ -19,6 +20,7 @@ import com.baomidou.mybatisplus.generator.config.PackageConfig;
 import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.baomidou.mybatisplus.generator.config.TemplateConfig;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
+import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 
@@ -57,9 +59,13 @@ public class GeneratorService {
 			}
 			return sb.toString();
 		})));
-		//TODO
+        //TODO
+        //query
 		TemplateUtils.SrcMainResourceProcess("/geneMod/temp/query.ftl.ftl", model, viewTargetPath+config.getTableName()+"/query.ftl");
-	}
+        //insert
+        TemplateUtils.SrcMainResourceProcess("/geneMod/temp/insert.ftl.ftl", model, viewTargetPath+config.getTableName()+"/insert.ftl");
+        
+    }
 	
 	private String upperCap(String str){
 		return str.substring(0, 1).toUpperCase()+str.substring(1);
@@ -75,6 +81,8 @@ public class GeneratorService {
         gc.setOutputDir(projectPath + "/src/main/java");
         gc.setAuthor("admgc");
         gc.setOpen(false);
+        gc.setFileOverride(true);
+        gc.setDateType(DateType.ONLY_DATE);
         mpg.setGlobalConfig(gc);
 
         // 数据源配置
@@ -84,6 +92,7 @@ public class GeneratorService {
         dsc.setDriverName(driverClassName);
         dsc.setUsername(username);
         dsc.setPassword(password);
+        dsc.setDbType(DbType.MYSQL);
         mpg.setDataSource(dsc);
 
         // 包配置

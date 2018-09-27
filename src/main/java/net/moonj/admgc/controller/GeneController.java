@@ -2,7 +2,6 @@ package net.moonj.admgc.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,9 +15,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import net.moonj.admgc.mapper.SchemaQueryMapper;
 import net.moonj.admgc.service.GeneratorService;
 import net.moonj.admgc.service.SchemaQueryService;
+import net.moonj.admgc.util.CompilerUtils;
 import net.moonj.admgc.vo.GeneConfig;
 import net.moonj.admgc.vo.GeneConfig.Function;
 import net.moonj.admgc.vo.GeneConfig.ShowType;
@@ -111,7 +110,7 @@ public class GeneController {
 //			System.out.println("key:"+e.getKey()+" |  value:"+e.getValue()[0]);
 //		});
 		
-		config.setInsertColumnShowType(new HashMap<>());
+		config.setInsertColumnShowType(new LinkedHashMap<>());
 		req.getParameterMap().entrySet().forEach(e->{
 			config.getInsertColumnShowType().put(e.getKey(), ShowType.valueOf(e.getValue()[0]));
 		});
@@ -148,7 +147,7 @@ public class GeneController {
 //			System.out.println("key:"+e.getKey()+" |  value:"+e.getValue()[0]);
 //		});
 		
-		config.setUpdateColumnShowType(new HashMap<>());
+		config.setUpdateColumnShowType(new LinkedHashMap<>());
 		req.getParameterMap().entrySet().forEach(e->{
 			config.getUpdateColumnShowType().put(e.getKey(), ShowType.valueOf(e.getValue()[0]));
 		});
@@ -164,6 +163,7 @@ public class GeneController {
 		}
 		//TODO
 		generatorService.generate((GeneConfig) req.getSession().getAttribute("geneConfig"));
+		CompilerUtils.mvnPackage();
 		return config;
 	}
 }

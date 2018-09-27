@@ -29,8 +29,8 @@ public class ${table.controllerName} {
 		return prefix + "query";
 	}
 	
-	@RequestMapping("/pages/${table.name}/insert/{pk}")
-	public Object insert(@PathVariable("pk") Serializable pk){
+	@RequestMapping("/pages/${table.name}/insert")
+	public Object insert(){
 		return prefix + "insert";
 	}
 	@RequestMapping("/pages/${table.name}/update/{pk}")
