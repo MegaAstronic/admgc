@@ -11,6 +11,7 @@ public class AdmgcApplicationTests {
 
 	@Test
 	public void contextLoads() {
+
 	}
 
 }
