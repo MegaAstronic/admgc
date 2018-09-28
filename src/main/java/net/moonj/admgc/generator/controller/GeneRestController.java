@@ -1,4 +1,4 @@
-package net.moonj.admgc.controller;
+package net.moonj.admgc.generator.controller;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
+import net.moonj.admgc.generator.GeneConfig;
 import net.moonj.admgc.service.SchemaQueryService;
-import net.moonj.admgc.vo.GeneConfig;
 
 @RestController
-public class MainRestController {
+public class GeneRestController {
 	
 	@Resource
 	private SchemaQueryService schemaQueryService;
@@ -30,7 +30,7 @@ public class MainRestController {
 	
 	
 
-	private static final Logger logger = LoggerFactory.getLogger(MainRestController.class);
+	private static final Logger logger = LoggerFactory.getLogger(GeneRestController.class);
 
 	@RequestMapping(path = "/api/table/show",method = RequestMethod.GET)
 	public Object showTables(Integer page,Integer limit){

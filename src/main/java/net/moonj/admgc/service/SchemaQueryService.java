@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
-import net.moonj.admgc.mapper.SchemaQueryMapper;
+import net.moonj.admgc.generator.mapper.SchemaQueryMapper;
 
 @Service
 public class SchemaQueryService {

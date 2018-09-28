@@ -22,13 +22,16 @@ public class CompilerUtils {
         if (osName.contains("Mac")) {
         	//TODO
         } else if (osName.contains("Windows")) {
-        	commands = new String[]{"cmd","/c","mvn package -Dmaven.test.skip=true","exit"};
+        	commands = new String[]{"cmd","/c","mvn package -Dmaven.test.skip=true"};
         } else {
-        	commands = new String[]{"/bin/sh","-c","mvn package -Dmaven.test.skip=true","exit"};
+        	commands = new String[]{"/bin/sh","-c","mvn package -Dmaven.test.skip=true"};
         }
 		ProcessBuilder pb = new ProcessBuilder(commands);//打开控制台
 		Process proc = pb.start();
 		handleProcessOutput(proc, logger::debug);//可能接受不完整
+		
+	
+		
 //		PrintStream procOut = new PrintStream(proc.getOutputStream());
 //		procOut.println("mvn package");
 //		procOut.println("exit");
@@ -46,7 +49,7 @@ public class CompilerUtils {
 					handle.accept(line);
 				}
 				try {
-					Thread.sleep(100);
+					Thread.sleep(200);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}

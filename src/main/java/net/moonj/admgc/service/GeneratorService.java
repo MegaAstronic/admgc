@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -22,10 +24,14 @@ import com.baomidou.mybatisplus.generator.config.TemplateConfig;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+import com.baomidou.mybatisplus.generator.engine.AbstractTemplateEngine;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import net.moonj.admgc.generator.GeneConfig;
+import net.moonj.admgc.generator.service.GeneratorMybatisPlusEngine;
+import net.moonj.admgc.util.GeneratedFileManager;
 import net.moonj.admgc.util.TemplateUtils;
-import net.moonj.admgc.vo.GeneConfig;
 
 @Service
 public class GeneratorService {
@@ -39,6 +45,9 @@ public class GeneratorService {
 	private String username;
 	@Value("${spring.datasource.password}")
 	private String password;
+
+	@Resource
+	private GeneratedFileManager generatedFileManager;
 	
 	private String parentPackage = "net.moonj.admgc.genecode";
 	private String viewTargetPath = "templates/genecode/";
@@ -75,7 +84,7 @@ public class GeneratorService {
 		return str.substring(0, 1).toUpperCase()+str.substring(1);
 	}
 	
-	private void mybatisplusGenerate(GeneConfig config){
+	private void mybatisplusGenerate(GeneConfig config) throws Exception{
 		// 代码生成器
         AutoGenerator mpg = new AutoGenerator();
 
@@ -141,7 +150,11 @@ public class GeneratorService {
         strategy.setControllerMappingHyphenStyle(true);
         strategy.setTablePrefix(pc.getModuleName() + "_");
         mpg.setStrategy(strategy);
-        mpg.setTemplateEngine(new FreemarkerTemplateEngine());
+        GeneratorMybatisPlusEngine engine = new GeneratorMybatisPlusEngine();
+        mpg.setTemplateEngine(engine);
+        
+        generatedFileManager.addGeneratedFile(config.getEntityName(), engine.getGeneratedFile());
+        
         mpg.execute();
 	}
 }

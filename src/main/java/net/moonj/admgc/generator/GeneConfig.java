@@ -1,4 +1,4 @@
-package net.moonj.admgc.vo;
+package net.moonj.admgc.generator;
 
 import java.util.List;
 import java.util.Map;

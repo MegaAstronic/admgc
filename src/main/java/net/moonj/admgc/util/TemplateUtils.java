@@ -50,9 +50,7 @@ public class TemplateUtils {
     public static void classpathSyncProcessUpdate(String templatePath,Map<?, ?> model,String targetClasspathpath) throws IOException, TemplateException{
 		File targetPathFile = ResourceUtils.getFile(ResourceUtils.CLASSPATH_URL_PREFIX + targetClasspathpath);
 		Template temp = TemplateUtils.getTemplate(templatePath);
-		String projectPath = System.getProperty("user.dir");
-		String srcPath = projectPath+"/src/main/resources/"+targetClasspathpath;
-		PrintWriter srcPW = new PrintWriter(new File(srcPath));
+		PrintWriter srcPW = new PrintWriter(new File(PathUtils.srcMainResource(targetClasspathpath)));
 		PrintWriter targetPW = new PrintWriter(targetPathFile);
 		temp.process(model, srcPW); //源代码
 		temp.process(model, targetPW); //target代码
@@ -69,9 +67,7 @@ public class TemplateUtils {
      */
     public static void SrcMainResourceProcess(String templatePath,Map<?, ?> model,String targetClasspathpath) throws IOException, TemplateException{
 		Template temp = TemplateUtils.getTemplate(templatePath);
-		String projectPath = System.getProperty("user.dir");
-		String srcPath = projectPath+"/src/main/resources/"+targetClasspathpath;
-		File srcFile = new File(srcPath);
+		File srcFile = new File(PathUtils.srcMainResource(targetClasspathpath));
 		new File(srcFile.getParent()).mkdirs();
 		PrintWriter srcPW = new PrintWriter(srcFile);
 		temp.process(model, srcPW); //源代码

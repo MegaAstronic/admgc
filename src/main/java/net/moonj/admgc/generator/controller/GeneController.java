@@ -1,4 +1,4 @@
-package net.moonj.admgc.controller;
+package net.moonj.admgc.generator.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,12 +15,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import net.moonj.admgc.generator.GeneConfig;
+import net.moonj.admgc.generator.GeneConfig.Function;
+import net.moonj.admgc.generator.GeneConfig.ShowType;
 import net.moonj.admgc.service.GeneratorService;
 import net.moonj.admgc.service.SchemaQueryService;
 import net.moonj.admgc.util.CompilerUtils;
-import net.moonj.admgc.vo.GeneConfig;
-import net.moonj.admgc.vo.GeneConfig.Function;
-import net.moonj.admgc.vo.GeneConfig.ShowType;
 
 @Controller
 public class GeneController {
