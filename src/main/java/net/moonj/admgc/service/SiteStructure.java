@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -78,7 +79,7 @@ public class SiteStructure implements InitializingBean {
  * @throws IOException
  */
 	public void save() throws TemplateException, IOException {
-		Map<String, Object> model = new HashMap<>();
+		Map<String, Object> model = new LinkedHashMap<>();
 		TemplateUtils.classpathSyncProcessUpdate(templatePath, modelPut(model), urlInClasspath);
 	}
 

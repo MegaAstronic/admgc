@@ -66,7 +66,7 @@ public class GeneRestController {
 			limit = 100;
 		}
 		
-		Map<String,Object> json = new HashMap<>();
+		Map<String,Object> json = new LinkedHashMap<>();
 		IPage<Map<String,Object>> pages = schemaQueryService.listColumn(new Page<>(page, limit),tableName);
 		List<Map<String,Object>> queryAnswer = pages.getRecords();
 		

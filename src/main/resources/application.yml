@@ -31,5 +31,4 @@ site.config:
     dbname: admgc
     path: siteConfig.xml
     templatePath: inner/structure.ftl
-logging.level.com.baomidou: DEBUG 
-    #net.moonj.admgc.genecode.member.mapper: TRACE
+logging.level.net.moonj.admgc.genecode.member.mapper: TRACE

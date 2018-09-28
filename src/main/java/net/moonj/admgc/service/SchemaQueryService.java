@@ -1,6 +1,7 @@
 package net.moonj.admgc.service;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,14 +32,14 @@ public class SchemaQueryService {
 	}
 	
 	public IPage<Map<String, Object>> listColumn(Page<Map<String, Object>> page,String tableName){
-		HashMap<String, Object> data = new HashMap<>();
+		HashMap<String, Object> data = new LinkedHashMap<>();
 		data.put("dbname", dbname);
 		data.put("tableName", tableName);
 		return schemaQueryMapper.listColumn(page,data);
 	}
 	
 	public String getPrimaryKey(String tableName){
-		Map<String,String> data = new HashMap<>();
+		Map<String,String> data = new LinkedHashMap<>();
 		data.put("tableName", tableName);
 		data.put("dbname", dbname);
 		return schemaQueryMapper.getPrimaryKey(data);

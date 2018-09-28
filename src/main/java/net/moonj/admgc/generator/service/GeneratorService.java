@@ -2,6 +2,7 @@ package net.moonj.admgc.generator.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -72,10 +73,10 @@ public class GeneratorService {
 		
 		List<String> generatedFile = new ArrayList<>();
 		
-		Map<String,Object> model = new HashMap<>();
+		Map<String,Object> model = new LinkedHashMap<>();
 		model.put("config", config);
 		config.setEntityName(underlineToCamel(config.getTableName()));
-		config.setQueryColumnsNamingMap(config.getQueryColumns().stream().collect(Collectors.toMap(k->k, this::underlineToCamel)));
+		config.setQueryColumnsNamingMap(config.getColumnMsg().keySet().stream().collect(Collectors.toMap(k->k, this::underlineToCamel)));
 		//TODO
         //query
 		generatedFile.add(TemplateUtils.SrcMainResourceProcess("/geneMod/temp/query.ftl.ftl", model, viewTargetPath+config.getTableName()+"/query.ftl"));
