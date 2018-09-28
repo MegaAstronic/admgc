@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import net.moonj.admgc.generator.GeneConfig;
 import net.moonj.admgc.generator.GeneConfig.Function;
 import net.moonj.admgc.generator.GeneConfig.ShowType;
-import net.moonj.admgc.service.GeneratorService;
+import net.moonj.admgc.generator.service.GeneratorService;
 import net.moonj.admgc.service.SchemaQueryService;
 import net.moonj.admgc.util.CompilerUtils;
 

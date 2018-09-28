@@ -1,4 +1,4 @@
-package net.moonj.admgc.service;
+package net.moonj.admgc.generator.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,7 +29,6 @@ import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import net.moonj.admgc.generator.GeneConfig;
-import net.moonj.admgc.generator.service.GeneratorMybatisPlusEngine;
 import net.moonj.admgc.util.GeneratedFileManager;
 import net.moonj.admgc.util.TemplateUtils;
 
@@ -53,22 +52,27 @@ public class GeneratorService {
 	private String viewTargetPath = "templates/genecode/";
 	
 	public void generate(GeneConfig config) throws Exception{
-		customGenerate(config);
-		mybatisplusGenerate(config);
+		List<String> generatedFile = new ArrayList<>();
+		generatedFile.addAll(customGenerate(config));
+		generatedFile.addAll(mybatisplusGenerate(config));
+		generatedFileManager.addGeneratedFile(config.getEntityName(), generatedFile);
 	}
-	private void customGenerate(GeneConfig config) throws Exception{
+	private List<String> customGenerate(GeneConfig config) throws Exception{
+		
+		List<String> generatedFile = new ArrayList<>();
+		
 		Map<String,Object> model = new HashMap<>();
 		model.put("config", config);
 		config.setEntityName(underlineToCamel(config.getTableName()));
 		config.setQueryColumnsNamingMap(config.getQueryColumns().stream().collect(Collectors.toMap(k->k, this::underlineToCamel)));
 		//TODO
         //query
-		TemplateUtils.SrcMainResourceProcess("/geneMod/temp/query.ftl.ftl", model, viewTargetPath+config.getTableName()+"/query.ftl");
-        //insert
-        TemplateUtils.SrcMainResourceProcess("/geneMod/temp/insert.ftl.ftl", model, viewTargetPath+config.getTableName()+"/insert.ftl");
+		generatedFile.add(TemplateUtils.SrcMainResourceProcess("/geneMod/temp/query.ftl.ftl", model, viewTargetPath+config.getTableName()+"/query.ftl"));
+		//insert
+		generatedFile.add(TemplateUtils.SrcMainResourceProcess("/geneMod/temp/insert.ftl.ftl", model, viewTargetPath+config.getTableName()+"/insert.ftl"));
         //update
-        TemplateUtils.SrcMainResourceProcess("/geneMod/temp/update.ftl.ftl", model, viewTargetPath+config.getTableName()+"/update.ftl");
-       
+		generatedFile.add(TemplateUtils.SrcMainResourceProcess("/geneMod/temp/update.ftl.ftl", model, viewTargetPath+config.getTableName()+"/update.ftl"));
+		return generatedFile;
     }
 	
 	private String underlineToCamel(String e){
@@ -84,7 +88,7 @@ public class GeneratorService {
 		return str.substring(0, 1).toUpperCase()+str.substring(1);
 	}
 	
-	private void mybatisplusGenerate(GeneConfig config) throws Exception{
+	private List<String> mybatisplusGenerate(GeneConfig config) throws Exception{
 		// 代码生成器
         AutoGenerator mpg = new AutoGenerator();
 
@@ -152,9 +156,7 @@ public class GeneratorService {
         mpg.setStrategy(strategy);
         GeneratorMybatisPlusEngine engine = new GeneratorMybatisPlusEngine();
         mpg.setTemplateEngine(engine);
-        
-        generatedFileManager.addGeneratedFile(config.getEntityName(), engine.getGeneratedFile());
-        
         mpg.execute();
+        return engine.getGeneratedFile();
 	}
 }

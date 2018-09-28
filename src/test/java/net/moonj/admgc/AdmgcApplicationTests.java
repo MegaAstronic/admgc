@@ -15,7 +15,8 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import net.moonj.admgc.generator.GeneConfig;
-import net.moonj.admgc.service.GeneratorService;
+import net.moonj.admgc.generator.service.GeneratorService;
+import net.moonj.admgc.util.GeneratedFileManager;
 import net.moonj.admgc.util.PathUtils;
 
 @RunWith(SpringRunner.class)
@@ -28,11 +29,16 @@ public class AdmgcApplicationTests {
 	}
 	@Resource
 	private GeneratorService generatorService;
+	@Resource
+	private GeneratedFileManager generatedFileManager;
 	@Test
 	public void generateFile() throws Exception {
 		ObjectMapper map =  new ObjectMapper();
 		GeneConfig config = map.readValue(new File(PathUtils.srcMainResource("test/geneConfig.json")), 	GeneConfig.class);
 		generatorService.generate(config);
+		generatedFileManager.removeModule(config.getEntityName());
 	}
+	
+	
 
 }

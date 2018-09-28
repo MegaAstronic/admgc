@@ -58,20 +58,23 @@ public class TemplateUtils {
 		targetPW.close();
     }
     /**
-     * 本方法用于使用ftl创建源码文件，生成后会请调用mvn package生成target文件
+     * 本方法用于使用ftl创建源码文件，生成后请自行调用mvn package生成target文件
      * @param templatePath
      * @param model
      * @param targetClasspathpath
+     * @return 返回生成文件的路径
      * @throws IOException
      * @throws TemplateException
      */
-    public static void SrcMainResourceProcess(String templatePath,Map<?, ?> model,String targetClasspathpath) throws IOException, TemplateException{
+    public static String SrcMainResourceProcess(String templatePath,Map<?, ?> model,String targetClasspathpath) throws IOException, TemplateException{
 		Template temp = TemplateUtils.getTemplate(templatePath);
-		File srcFile = new File(PathUtils.srcMainResource(targetClasspathpath));
+		String srcFilePath = PathUtils.srcMainResource(targetClasspathpath);
+		File srcFile = new File(srcFilePath);
 		new File(srcFile.getParent()).mkdirs();
 		PrintWriter srcPW = new PrintWriter(srcFile);
 		temp.process(model, srcPW); //源代码
 		srcPW.close();
+		return srcFilePath;
     }
     
     public static void clearCache() {
