@@ -7,7 +7,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +37,8 @@ public class GeneratedFileManager {
 	}
 
 	public void addGeneratedFile(String moduleName, List<String> files) throws Exception {
-		moduleFilesMap.put(moduleName, files);
+		List<String> absPath = files.stream().map(x->new File(x).getAbsolutePath()).collect(Collectors.toList());
+		moduleFilesMap.put(moduleName, absPath);
 		save();
 	}
 	

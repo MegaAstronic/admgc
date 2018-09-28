@@ -24,13 +24,12 @@ import com.baomidou.mybatisplus.generator.config.TemplateConfig;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
-import com.baomidou.mybatisplus.generator.engine.AbstractTemplateEngine;
-import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import net.moonj.admgc.generator.GeneConfig;
+import net.moonj.admgc.service.SiteStructure;
 import net.moonj.admgc.util.GeneratedFileManager;
 import net.moonj.admgc.util.TemplateUtils;
+import net.moonj.admgc.vo.DirNode;
+import net.moonj.admgc.vo.LinkNode;
 
 @Service
 public class GeneratorService {
@@ -48,6 +47,9 @@ public class GeneratorService {
 	@Resource
 	private GeneratedFileManager generatedFileManager;
 	
+	@Resource
+	private SiteStructure siteStructure;
+	
 	private String parentPackage = "net.moonj.admgc.genecode";
 	private String viewTargetPath = "templates/genecode/";
 	
@@ -56,6 +58,15 @@ public class GeneratorService {
 		generatedFile.addAll(customGenerate(config));
 		generatedFile.addAll(mybatisplusGenerate(config));
 		generatedFileManager.addGeneratedFile(config.getEntityName(), generatedFile);
+		
+		if(config.getAddToSidebar()){
+			LinkNode link = new LinkNode();
+			link.setName("查询"+config.getEntityName());
+			link.setHref("/pages/"+config.getTableName()+"/query");
+			siteStructure.getSidebarRoot().getNodes().add(link);
+			siteStructure.save();
+		}
+		
 	}
 	private List<String> customGenerate(GeneConfig config) throws Exception{
 		
@@ -72,6 +83,7 @@ public class GeneratorService {
 		generatedFile.add(TemplateUtils.SrcMainResourceProcess("/geneMod/temp/insert.ftl.ftl", model, viewTargetPath+config.getTableName()+"/insert.ftl"));
         //update
 		generatedFile.add(TemplateUtils.SrcMainResourceProcess("/geneMod/temp/update.ftl.ftl", model, viewTargetPath+config.getTableName()+"/update.ftl"));
+
 		return generatedFile;
     }
 	

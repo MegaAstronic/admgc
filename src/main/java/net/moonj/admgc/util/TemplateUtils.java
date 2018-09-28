@@ -8,10 +8,8 @@ import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.util.ResourceUtils;

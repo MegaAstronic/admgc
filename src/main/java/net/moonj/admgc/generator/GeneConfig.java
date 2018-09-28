@@ -31,7 +31,7 @@ public class GeneConfig {
 	
 	private Map<String,String> aliasMap;
 	
-	
+	private boolean addToSidebar = true;
 	
 	public static enum ShowType{
 		shortText,longText,datetime
@@ -132,6 +132,14 @@ public class GeneConfig {
 
 	public void setEntityName(String entityName) {
 		this.entityName = entityName;
+	}
+
+	public boolean getAddToSidebar() {
+		return addToSidebar;
+	}
+
+	public void setAddToSidebar(boolean addToSidebar) {
+		this.addToSidebar = addToSidebar;
 	}
 
 

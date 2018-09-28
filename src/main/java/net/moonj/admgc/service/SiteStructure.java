@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -24,6 +25,7 @@ import freemarker.template.TemplateException;
 import net.moonj.admgc.util.TemplateUtils;
 import net.moonj.admgc.vo.DirNode;
 import net.moonj.admgc.vo.LinkNode;
+import net.moonj.admgc.vo.Node;
 
 @Component
 public class SiteStructure implements InitializingBean {
@@ -31,7 +33,7 @@ public class SiteStructure implements InitializingBean {
 	private String logo;
 	private DirNode sidebarRoot = new DirNode();
 
-	private DirNode navRoot = new DirNode();;
+	private DirNode navRoot = new DirNode();
 
 	@Value("${site.config.path}")
 	private String urlInClasspath;
@@ -75,12 +77,25 @@ public class SiteStructure implements InitializingBean {
  * @throws TemplateException
  * @throws IOException
  */
-	public void persistence() throws TemplateException, IOException {
+	public void save() throws TemplateException, IOException {
 		Map<String, Object> model = new HashMap<>();
 		TemplateUtils.classpathSyncProcessUpdate(templatePath, modelPut(model), urlInClasspath);
 	}
 
+	public void eachSidebarNode(Consumer<Node> consumer){
+		eachSidebarHandle(this.sidebarRoot,consumer);
+	}
 
+	private void eachSidebarHandle(Node node,Consumer<Node> consumer){
+		if(node instanceof DirNode){
+			DirNode dir = (DirNode) node;
+			for(Node childNode:dir.getNodes()){
+				eachSidebarHandle(childNode, consumer);
+			}
+		}else{
+			consumer.accept(node);
+		}
+	}
 
 
 
