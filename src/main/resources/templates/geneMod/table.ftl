@@ -48,7 +48,7 @@ layui.use(['element','table'], function(){
 });
 </script>
 <script type="text/html" id="tablefunc">
-  <a href="/gene/config?tableName={{ d.TABLE_NAME}}" class="layui-btn layui-btn-primary layui-btn-xs">选择</a>
+  <a href="/pages/gene/config?tableName={{ d.TABLE_NAME}}" class="layui-btn layui-btn-primary layui-btn-xs">选择</a>
 </script>
       
 </body>

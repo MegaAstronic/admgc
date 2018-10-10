@@ -19,7 +19,7 @@
     	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
   			<legend>Insert</legend>
 		</fieldset>
-		<form class="layui-form" action="/gene/insert/handle">
+		<form class="layui-form" action="/pages/gene/insert/handle">
 			
 		<#list columns as col>
 			

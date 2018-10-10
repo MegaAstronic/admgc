@@ -19,7 +19,7 @@
     	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
   			<legend>columns</legend>
 		</fieldset>
-		<form class="layui-form" action="/gene/config/handle">
+		<form class="layui-form" action="/pages/gene/config/handle">
 			<table class="layui-table" lay-data="{height:315, url:'/api/table/column/${tableName}', id:'tablecolumn'}" lay-filter="test">
 			  <thead>
 			    <tr>

@@ -1,5 +1,7 @@
 @charset "utf-8";
- 
+#kaptcha {
+	margin-bottom: 10px;
+}
 .layui-header {
     background: none;
 }

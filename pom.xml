@@ -63,7 +63,11 @@
 			<version>1.4.0</version>
 		</dependency>
 
-
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>kaptcha-spring-boot-starter</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 
 		<!-- 热部署模块 -->
 		<dependency>

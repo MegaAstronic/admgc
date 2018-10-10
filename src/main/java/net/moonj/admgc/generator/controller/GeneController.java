@@ -23,6 +23,7 @@ import net.moonj.admgc.service.SchemaQueryService;
 import net.moonj.admgc.util.CompilerUtils;
 
 @Controller
+@RequestMapping("/pages")
 public class GeneController {
 	
 	

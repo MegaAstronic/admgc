@@ -19,7 +19,7 @@
     	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
   			<legend>Update</legend>
 		</fieldset>
-		<form class="layui-form" action="/gene/update/handle">
+		<form class="layui-form" action="/pages/gene/update/handle">
 			
 		<#list columns as col>
 			

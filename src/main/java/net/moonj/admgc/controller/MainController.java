@@ -38,24 +38,26 @@ public class MainController {
 
 	private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 
-
-	
 	@RequestMapping("/")
+	public Object indexx(HttpServletResponse resp) throws Exception{
+		resp.sendRedirect("/pages");
+		return null;
+	}
+	
+	@RequestMapping("/pages")
 	public Object index(Map<String,Object> model) throws Exception{
-//		TemplateUtils.srcProcess("inner/table.ftl", new HashMap<>(), "templates/tablex.ftl");
-//		CompilerUtils.mvnPackage();
 		return "index";
 	}
 	
-	@RequestMapping("/table")
-	public Object tb(Map<String,Object> model) throws Exception{
-		return "tablex";
-	}
+//	@RequestMapping("/table")
+//	public Object tb(Map<String,Object> model) throws Exception{
+//		return "tablex";
+//	}
 	
-	@RequestMapping("/gc")
-	public String gc() throws IOException{
-		CodeGenerator.main(null);
-		CompilerUtils.mvnPackage();
-		return "call successfully";
-	}
+//	@RequestMapping("/gc")
+//	public String gc() throws IOException{
+//		CodeGenerator.main(null);
+//		CompilerUtils.mvnPackage();
+//		return "call successfully";
+//	}
 }
