@@ -26,6 +26,7 @@ import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import net.moonj.admgc.generator.GeneConfig;
+import net.moonj.admgc.generator.GeneConfig.Function;
 import net.moonj.admgc.service.SiteStructure;
 import net.moonj.admgc.util.GeneratedFileManager;
 import net.moonj.admgc.util.TemplateUtils;
@@ -81,9 +82,13 @@ public class GeneratorService {
         //query
 		generatedFile.add(TemplateUtils.SrcMainResourceProcess("/geneMod/temp/query.ftl.ftl", model, viewTargetPath+config.getTableName()+"/query.ftl"));
 		//insert
-		generatedFile.add(TemplateUtils.SrcMainResourceProcess("/geneMod/temp/insert.ftl.ftl", model, viewTargetPath+config.getTableName()+"/insert.ftl"));
-        //update
-		generatedFile.add(TemplateUtils.SrcMainResourceProcess("/geneMod/temp/update.ftl.ftl", model, viewTargetPath+config.getTableName()+"/update.ftl"));
+		if(config.getFunctions().contains(Function.insert)){
+			generatedFile.add(TemplateUtils.SrcMainResourceProcess("/geneMod/temp/insert.ftl.ftl", model, viewTargetPath+config.getTableName()+"/insert.ftl"));
+		}
+		//update
+		if(config.getFunctions().contains(Function.update)){
+			generatedFile.add(TemplateUtils.SrcMainResourceProcess("/geneMod/temp/update.ftl.ftl", model, viewTargetPath+config.getTableName()+"/update.ftl"));
+		}
 
 		return generatedFile;
     }

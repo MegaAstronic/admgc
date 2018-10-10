@@ -48,7 +48,7 @@ public class CodeGenerator {
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
         gc.setOutputDir(projectPath + "/src/main/java");
-        gc.setAuthor("jobob");
+        gc.setAuthor("varukiri");
         gc.setOpen(false);
         mpg.setGlobalConfig(gc);
 
@@ -64,7 +64,7 @@ public class CodeGenerator {
         // 包配置
         PackageConfig pc = new PackageConfig();
         pc.setModuleName(scanner("模块名"));
-        pc.setParent("net.moonj.admgc.genecode");
+        pc.setParent("net.moonj.admgc");
         mpg.setPackageInfo(pc);
 
         // 自定义配置
