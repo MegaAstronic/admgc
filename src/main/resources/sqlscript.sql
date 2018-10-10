@@ -47,7 +47,7 @@ CONSTRAINT fk_rid_tb_role_permit FOREIGN KEY (rid) REFERENCES auth_role(rid) ,
 CONSTRAINT fk_pid_tb_role_permit FOREIGN KEY (pid) REFERENCES auth_permit(pid) 
 ) ENGINE=innodb;
 
-INSERT INTO auth_member(mid,username,password,name) VALUES(1,'astronic','supachoapa','astronic');
+INSERT INTO auth_member(mid,username,password,name) VALUES(1,'root','admin','astronic');
 INSERT INTO auth_role(rid,flag) VALUES(1,'article');
 INSERT INTO auth_permit(pid,flag) VALUES(1,'article:add');
 

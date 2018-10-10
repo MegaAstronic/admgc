@@ -1,93 +1,68 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-
-  <meta charset="utf-8">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-  <title>layout 后台大布局 - Layui</title>
-
-  <link rel="stylesheet" href="/layui/css/layui.css">
-
-<style>
-
-.window{  
-
-    width: 400px;  
-
-    position: absolute;  
-
-    margin-left: -200px;  
-
-    margin-top: -80px;  
-
-    top: 50%;  
-
-    left: 50%;  
-
-    display: block;  
-
-    z-index: 2000;  
-
-     background: #fff;
-
-    padding: 20 0;
-
-} 
-
-</style>
-
+    <meta charset="UTF-8">
+ 
+    <title>登录页</title>
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <link rel="stylesheet" href="css/login.css">
+ 
 </head>
-
-<body style="background: #f1f1f1;">
-
-<div class="window">
-
-<form  class="layui-form" method="post">
-
-  <div class="layui-form-item" style="margin-right: 100px;margin-top: 20px;">
-
-    <label class="layui-form-label">用户名：</label>
-
-    <div class="layui-input-block">
-
-      <input type="text" name="user" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
-
-    </div>
-
-  </div>
-
-  <div class="layui-form-item" >
-
-    <label class="layui-form-label">密&nbsp;&nbsp;&nbsp;&nbsp;码：</label>
-
-    <div class="layui-input-inline">
-
-      <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
-
-    </div>
-
-  </div>
-
-  <div class="layui-form-item">
-
-  <input type="checkbox" name="" title="写作" lay-skin="primary" checked>
-
-<div style="margin-left: 50px;margin-bottom: 10px;" class="layui-unselect layui-form-checkbox" lay-skin="primary"><span>保持登录7天</span><i class="layui-icon"></i></div>
-
-    <div style="text-align: center;">
-
-      <input type="submit" class="layui-btn"  value="登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录"/>
-
-    </div>
-
-  </div>
-
-</form>
-
- </div>
-
+<body>
+ 
+<div class="login-main">
+	
+    <header class="layui-elip">登录</header>
+    ${errmsg}
+    <form class="layui-form">
+        <div class="layui-input-inline">
+            <input type="text" name="username" required lay-verify="required" placeholder="用户名" autocomplete="off"
+                   class="layui-input">
+        </div>
+        <div class="layui-input-inline">
+            <input type="password" name="password" required lay-verify="required" placeholder="密码" autocomplete="off"
+                   class="layui-input">
+        </div>
+        <div class="layui-input-inline login-btn">
+            <button lay-submit lay-filter="login" class="layui-btn">登录</button>
+        </div>
+        <!--<div class="layui-input-inline">
+            <button type="button" class="layui-btn layui-btn-primary">QQ登录</button>
+        </div>
+        <div class="layui-input-inline">
+            <button type="button" class="layui-btn layui-btn-normal">微信登录</button>
+        </div>-->
+        <p><a href="register.html" class="fl">立即注册</a><a href="javascript:;" class="fr">忘记密码？</a></p>
+    </form>
+</div>
+ 
+ 
+<script src="/layui/layui.js"></script>
+<script type="text/javascript">
+    layui.use(['form','layer','jquery'], function () {
+ 
+        // 操作对象
+        var form = layui.form;
+        var $ = layui.jquery;
+        form.on('submit(login)',function (data) {
+            $.ajax({
+                url:'/login/do',
+                data:data.field,
+                dataType:'text',
+                type:'post',
+                success:function (data) {
+                	console.log("ajax data= "+data);
+                    if (data == '1'){
+                        location.href = "/";
+                    }else{
+                        layer.msg('登录名或密码错误');
+                    }
+                }
+            })
+            return false;
+        })
+ 
+    });
+</script>
 </body>
-
 </html>
