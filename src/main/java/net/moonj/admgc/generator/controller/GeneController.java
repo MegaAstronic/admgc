@@ -33,6 +33,8 @@ public class GeneController {
 	@Resource
 	private GeneratorService generatorService;
 	
+	private final String redirectPrefix = "/pages";
+	
 	private static final String prefixFTL = "/geneMod/";
 	@RequestMapping("/gene/table")
 	public Object geneTableSelect(Map<String,Object> model,HttpServletRequest req){
@@ -45,7 +47,7 @@ public class GeneController {
 
 		GeneConfig config = (GeneConfig) req.getSession().getAttribute("geneConfig");
 		if(tableName==null || config == null){
-			resp.sendRedirect("/gene/table");
+			resp.sendRedirect(redirectPrefix+"/gene/table");
 			return null;
 		}
 		
@@ -60,7 +62,7 @@ public class GeneController {
 	public Object geneConfig(Map<String,Object> model,HttpServletRequest req,HttpServletResponse resp) throws IOException{
 		GeneConfig config = (GeneConfig) req.getSession().getAttribute("geneConfig");
 		if(config == null){
-			resp.sendRedirect("/gene/table");
+			resp.sendRedirect(redirectPrefix+"/gene/table");
 			return null;
 		}
 		config.setFunctions(new ArrayList<>());
@@ -77,7 +79,7 @@ public class GeneController {
 				config.getAliasMap().put(k.split(":")[1], v);
 			}
 		});
-		resp.sendRedirect("/gene/insert");
+		resp.sendRedirect(redirectPrefix+"/gene/insert");
 		return null;
 	}
 	
@@ -85,10 +87,10 @@ public class GeneController {
 	public Object geneInsert(Map<String,Object> model,HttpServletRequest req,HttpServletResponse resp) throws IOException{
 		GeneConfig config = (GeneConfig) req.getSession().getAttribute("geneConfig");
 		if(config == null){
-			resp.sendRedirect("/gene/table");
+			resp.sendRedirect(redirectPrefix+"/gene/table");
 			return null;
 		} else if(!config.getFunctions().contains(Function.insert)){
-			resp.sendRedirect("/gene/update");
+			resp.sendRedirect(redirectPrefix+"/gene/update");
 			return null;
 		}
 		List<String> columns = config.getColumnMsg().entrySet().stream().map(x->x.getKey()).collect(Collectors.toList());
@@ -104,7 +106,7 @@ public class GeneController {
 	public Object geneInsertHandle(Map<String,Object> model,HttpServletRequest req,HttpServletResponse resp) throws IOException{
 		GeneConfig config = (GeneConfig) req.getSession().getAttribute("geneConfig");
 		if(config == null){
-			resp.sendRedirect("/gene/table");
+			resp.sendRedirect(redirectPrefix+"/gene/table");
 			return null;
 		}		
 //		req.getParameterMap().entrySet().forEach(e->{
@@ -116,7 +118,7 @@ public class GeneController {
 			config.getInsertColumnShowType().put(e.getKey(), ShowType.valueOf(e.getValue()[0]));
 		});
 		
-		resp.sendRedirect("/gene/update");
+		resp.sendRedirect(redirectPrefix+"/gene/update");
 		return null;
 	}
 	
@@ -124,10 +126,10 @@ public class GeneController {
 	public Object geneUpdate(Map<String,Object> model,HttpServletRequest req,HttpServletResponse resp) throws IOException{
 		GeneConfig config = (GeneConfig) req.getSession().getAttribute("geneConfig");
 		if(config == null){
-			resp.sendRedirect("/gene/table");
+			resp.sendRedirect(redirectPrefix+"/gene/table");
 			return null;
 		} else if(!config.getFunctions().contains(Function.update)){
-			resp.sendRedirect("/gene/do");
+			resp.sendRedirect(redirectPrefix+"/gene/do");
 			return null;
 		}	
 		List<String> columns = config.getColumnMsg().entrySet().stream().map(x->x.getKey()).collect(Collectors.toList());
@@ -141,7 +143,7 @@ public class GeneController {
 	public Object geneUpdateHandle(Map<String,Object> model,HttpServletRequest req,HttpServletResponse resp) throws IOException{
 		GeneConfig config = (GeneConfig) req.getSession().getAttribute("geneConfig");
 		if(config == null){
-			resp.sendRedirect("/gene/table");
+			resp.sendRedirect(redirectPrefix+"/gene/table");
 			return null;
 		}
 //		req.getParameterMap().entrySet().forEach(e->{
@@ -152,14 +154,14 @@ public class GeneController {
 		req.getParameterMap().entrySet().forEach(e->{
 			config.getUpdateColumnShowType().put(e.getKey(), ShowType.valueOf(e.getValue()[0]));
 		});
-		resp.sendRedirect("/gene/do");
+		resp.sendRedirect(redirectPrefix+"/gene/do");
 		return null;
 	}
 	@RequestMapping("/gene/do")
 	public @ResponseBody Object geneDo(Map<String,Object> model,HttpServletRequest req,HttpServletResponse resp) throws Exception{
 		GeneConfig config = (GeneConfig) req.getSession().getAttribute("geneConfig");
 		if(config == null){
-			resp.sendRedirect("/gene/table");
+			resp.sendRedirect(redirectPrefix+"/gene/table");
 			return null;
 		}
 		//TODO
