@@ -7,6 +7,10 @@
   <title>更新${config.entityName}</title>
   <link rel="stylesheet" href="/layui/css/layui.css">
   <script src="/layui/layui.js"></script>
+      <script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.all.min.js"> </script>
+    <script type="text/javascript" charset="utf-8" src="/ueditor/lang/zh-cn/zh-cn.js"></script>
+
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -38,6 +42,12 @@
                         <textarea name="${config.queryColumnsNamingMap[key]}" placeholder="请输入内容" class="layui-textarea" value="${r"${entity."}${config.queryColumnsNamingMap[key]}}"></textarea>
                     [#elseif (showType == "datetime")/]
                         <input type="text" class="layui-input" id="date-${config.queryColumnsNamingMap[key]}" name="${config.queryColumnsNamingMap[key]}" value="${r"${entity."}${config.queryColumnsNamingMap[key]}?string("${config.dateFormat}")!}">
+                    [#elseif (showType == "richText")/]
+                    	<input type="text" name="${config.queryColumnsNamingMap[key]}" required  lay-verify=""  >
+                    	<script type="text/javascript">
+                    		var ue = UE.getEditor('editor');
+                        ue.setContent(`${r"${entity."}${config.queryColumnsNamingMap[key]}!}`);
+                    	</script>
                     [/#if]
                   [/#if]
 

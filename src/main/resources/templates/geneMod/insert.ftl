@@ -30,6 +30,7 @@
 					  <option value="shortText" ${(columnMsg[col].DATA_TYPE == "varchar")?string('selected', '')}>短文本(一行)</option>
 					  <option value="longText" ${(columnMsg[col].DATA_TYPE == "text")?string('selected', '')} >长文本(文本域)</option>
 					  <option value="datetime" ${(columnMsg[col].DATA_TYPE == "datetime")?string('selected', '')} >日期(日期选择器)</option>
+					  <option value="richText" >富文本</option>
 					</select>  
 				</div>
 			</div>
