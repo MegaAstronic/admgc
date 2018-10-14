@@ -43,10 +43,11 @@
                     [#elseif (showType == "datetime")/]
                         <input type="text" class="layui-input" id="date-${config.queryColumnsNamingMap[key]}" name="${config.queryColumnsNamingMap[key]}" value="${r"${entity."}${config.queryColumnsNamingMap[key]}?string("${config.dateFormat}")!}">
                     [#elseif (showType == "richText")/]
-                    	<input type="text" name="${config.queryColumnsNamingMap[key]}" required  lay-verify=""  >
+                    	<textarea type="text" name="${config.queryColumnsNamingMap[key]}" id="richtext-${config.queryColumnsNamingMap[key]}"  >
+                        ${r"${entity."}${config.queryColumnsNamingMap[key]}!}
+                      </textarea>
                     	<script type="text/javascript">
-                    		var ue = UE.getEditor('editor');
-                        ue.setContent(`${r"${entity."}${config.queryColumnsNamingMap[key]}!}`);
+                    		var ue = UE.getEditor('richtext-${config.queryColumnsNamingMap[key]}');
                     	</script>
                     [/#if]
                   [/#if]

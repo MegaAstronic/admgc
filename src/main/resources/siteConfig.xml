@@ -15,5 +15,14 @@
 	<link href="#" name="页面管理"/>
 	</dir>
 	<link href="#" name="关于"/>
+	<link href="/pages/project_info/query" name="查询projectInfo"/>
+	<link href="/pages/project_info/query" name="查询projectInfo"/>
+	<link href="/pages/project_info/query" name="查询projectInfo"/>
+	<link href="/pages/project_info/query" name="查询projectInfo"/>
+	<link href="/pages/project_info/query" name="查询projectInfo"/>
+	<link href="/pages/project_info/query" name="查询projectInfo"/>
+	<link href="/pages/project_info/query" name="查询projectInfo"/>
+	<link href="/pages/project_info/query" name="查询projectInfo"/>
+	<link href="/pages/project_info/query" name="查询projectInfo"/>
 	</sidebar>
 </site>

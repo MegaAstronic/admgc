@@ -34,7 +34,7 @@ public class GeneConfig {
 	private boolean addToSidebar = true;
 	
 	public static enum ShowType{
-		shortText,longText,datetime
+		shortText,longText,datetime,richText
 	}
 	/**
 	 * Key : COLUMN_NAME

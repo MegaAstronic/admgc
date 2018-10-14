@@ -1,3 +1,4 @@
+[#ftl]
 package ${package.Controller};
 
 import java.io.Serializable;
@@ -18,7 +19,11 @@ import net.moonj.admgc.genecode.${table.name}.service.${table.serviceName};
 
 @Controller
 public class ${table.controllerName} {
-	
+	[#list table.fields as field]
+		[#if field.keyFlag]
+			[#assign pkType="${field.columnType.type}"/]
+		[/#if]		
+	[/#list]	
 	@Autowired
 	private ${table.serviceName} ${table.name}Service;
 	
@@ -34,7 +39,7 @@ public class ${table.controllerName} {
 		return prefix + "insert";
 	}
 	@RequestMapping("/pages/${table.name}/update/{pk}")
-	public Object update(@PathVariable("pk") Serializable pk,Map<String,Object> model){
+	public Object update(@PathVariable("pk") ${pkType} pk,Map<String,Object> model){
 		model.put("entity", ${table.name}Service.getById(pk));
 		return prefix + "update";
 	}
@@ -55,8 +60,11 @@ public class ${table.controllerName} {
 		json.put("data", pages.getRecords());
 		return json;
 	}
+	
+
+	
 	@RequestMapping(path = "/pages/${table.name}/delete/do/{pk}")
-	public Object doDelete(@PathVariable("pk") Serializable pk){
+	public Object doDelete(@PathVariable("pk") ${pkType} pk){
 		${table.name}Service.removeById(pk);
 		return prefix + "query";
 	}
