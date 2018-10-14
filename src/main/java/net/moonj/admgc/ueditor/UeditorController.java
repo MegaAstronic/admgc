@@ -1,26 +1,33 @@
 package net.moonj.admgc.ueditor;
 
-import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.PrintWriter;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.json.JSONException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
+import com.baidu.ueditor.ActionEnter;
 
 @Controller
 public class UeditorController {
-	@RequestMapping(value="/ueditor")
-    @ResponseBody
-    public String ueditor(HttpServletRequest request) {
 
-        return PublicMsg.UEDITOR_CONFIG;
+    @RequestMapping(value="/config")  
+    public void config(HttpServletRequest request, HttpServletResponse response) throws JSONException {  
+        response.setContentType("application/json");  
+        String rootPath = request.getSession().getServletContext().getRealPath("/");  
+        try {  
+            String exec = new ActionEnter(request, rootPath).exec();  
+            PrintWriter writer = response.getWriter();  
+            writer.write(exec);  
+            writer.flush();  
+            writer.close();  
+        } catch (IOException e) {  
+            e.printStackTrace();  
+        }  
     }
 
-    @RequestMapping(value="/imgUpload")
-    @ResponseBody
-    public Ueditor imgUpload(MultipartFile upfile) {
-        Ueditor ueditor = new Ueditor();
-        return ueditor;
-    }
 
 }

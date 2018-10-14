@@ -1,0 +1,1 @@
+mvn install:install-file -DgroupId=org.json -DartifactId=json -Dversion=1.0 -Dpackaging=jar -Dfile=D:\gitWorkSpace\admgc\src\main\resources\lib\json.jar
