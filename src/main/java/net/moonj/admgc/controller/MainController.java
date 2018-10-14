@@ -43,7 +43,10 @@ public class MainController {
 		resp.sendRedirect("/pages");
 		return null;
 	}
-	
+	@RequestMapping("/ue")
+	public Object indexxx(HttpServletResponse resp) throws Exception{
+		return "/ue";
+	}
 	@RequestMapping("/pages")
 	public Object index(Map<String,Object> model) throws Exception{
 		return "index";
