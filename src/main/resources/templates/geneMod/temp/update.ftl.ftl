@@ -29,7 +29,7 @@
 		[#list config.updateColumnShowType?keys as key]
 			
 			<div class="layui-form-item">
-				<label class="layui-form-label">${config.queryColumnsNamingMap[key]}</label>
+				<label class="layui-form-label">${config.aliasMap[key]}</label>
 				<div class="layui-input-block">
                     [#assign showType = config.updateColumnShowType[key]]
                   [#if (key == config.primaryKey)]

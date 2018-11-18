@@ -64,6 +64,7 @@
                         location.href = "/";
                     }else if(data == '0'){
                         layer.msg('登录名或密码错误');
+                        $("#kaptcha").attr('src','/kaptcha/render'+"?"+Math.random());
                     }else if(data == '-1'){
                     	layer.msg('验证码错误');
                     	$("#kaptcha").attr('src','/kaptcha/render'+"?"+Math.random());

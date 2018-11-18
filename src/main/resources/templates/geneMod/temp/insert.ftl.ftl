@@ -29,7 +29,7 @@
 		[#list config.insertColumnShowType?keys as key]
 			
 			<div class="layui-form-item">
-				<label class="layui-form-label">${config.queryColumnsNamingMap[key]}</label>
+				<label class="layui-form-label">${config.aliasMap[key]}</label>
 				<div class="layui-input-block">
                     [#assign showType = config.insertColumnShowType[key]]
 					[#if (showType == "shortText")]
@@ -39,9 +39,11 @@
                     [#elseif (showType == "datetime")/]
                         <input type="text" class="layui-input" id="date-${config.queryColumnsNamingMap[key]}" name="${config.queryColumnsNamingMap[key]}">
                     [#elseif (showType == "richText")/]
-                    	<input type="text" name="${config.queryColumnsNamingMap[key]}" required  lay-verify="" placeholder="请输入${config.queryColumnsNamingMap[key]}" >
+                    	<textarea type="text" name="${config.queryColumnsNamingMap[key]}" id="richtext-${config.queryColumnsNamingMap[key]}"  >
+                        
+                      </textarea>
                     	<script type="text/javascript">
-                    		var ue = UE.getEditor('editor');
+                    		var ue = UE.getEditor('richtext-${config.queryColumnsNamingMap[key]}');
                     	</script>
                     [/#if]
 

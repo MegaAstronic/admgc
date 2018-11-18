@@ -1,7 +1,6 @@
 [#ftl]
 package ${package.Controller};
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.ModelMap;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -44,7 +44,7 @@ public class ${table.controllerName} {
 		return prefix + "update";
 	}
 	
-	@RequestMapping(path = "/api/${table.name}/")
+	@RequestMapping(path = "/api/${table.name}")
 	public @ResponseBody Object doQuery(Integer page,Integer limit){
 		if(page==null){
 			page = 1;
@@ -61,23 +61,30 @@ public class ${table.controllerName} {
 		return json;
 	}
 	
-
+	private final String QUERY_URI = "/pages/${table.name}/query";
+	private final String MSG_URI = "/msg";
 	
 	@RequestMapping(path = "/pages/${table.name}/delete/do/{pk}")
-	public Object doDelete(@PathVariable("pk") ${pkType} pk){
-		${table.name}Service.removeById(pk);
-		return prefix + "query";
+	public Object doDelete(@PathVariable("pk") ${pkType} pk,ModelMap map){
+		boolean ans = ${table.name}Service.removeById(pk);
+		map.put("msg", "删除"+(ans?"成功":"失败"));
+		map.put("url",QUERY_URI);
+		return MSG_URI;
 	}
 
 	@RequestMapping(path = "/pages/${table.name}/insert/do")
-	public Object doInsert(${table.entityName} entity){
-		${table.name}Service.save(entity);
-		return prefix + "query";
+	public Object doInsert(${table.entityName} entity,ModelMap map){
+		boolean ans = ${table.name}Service.save(entity);
+		map.put("msg", "新增数据"+(ans?"成功":"失败"));
+		map.put("url",QUERY_URI);
+		return MSG_URI;
 	}
 	
 	@RequestMapping(path = "/pages/${table.name}/update/do")
-	public Object doUpdate(${table.entityName} entity){
-		${table.name}Service.updateById(entity);
-		return prefix + "query";
+	public Object doUpdate(${table.entityName} entity,ModelMap map){
+		boolean ans = ${table.name}Service.updateById(entity);
+		map.put("msg", "更新数据"+(ans?"成功":"失败"));
+		map.put("url",QUERY_URI);
+		return MSG_URI;
 	}
 }
